@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "937648555461",
+    "firebase_url": "https://my-carrot-club-flutter.firebaseio.com",
+    "project_id": "my-carrot-club-flutter",
+    "storage_bucket": "my-carrot-club-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:937648555461:android:21a8a8ef5548ef8157f7ac",
+        "android_client_info": {
+          "package_name": "com.example.carrot_club_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "937648555461-rmbv8h9npdt7p1allkegg2u2i7p6fpf6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPZYSlNQtuSwXfAjlwrmH-F5lA13YSPlk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "937648555461-rmbv8h9npdt7p1allkegg2u2i7p6fpf6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
