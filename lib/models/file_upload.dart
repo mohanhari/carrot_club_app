@@ -2,20 +2,22 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:carrot_club_app/configs/env.dart';
 import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FileUpload {
-  File image;
+  String image_path;
 
   Future<String> uploadImage() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('fcm_token');
     FormData formData = new FormData.fromMap({
       "order": {
-        "name": basename(image.path),
-        "receipt": await MultipartFile.fromFile(image.path,filename: basename(image.path)),
+        "name": basename(image_path),
+        "receipt": await MultipartFile.fromFile(image_path, filename: basename(image_path)),
+        "token": token,
       }
     });
     Response response;
-    print(image);
     Dio dio = new Dio();
     dio.interceptors.add(InterceptorsWrapper(
         onRequest:(Options options) async {
@@ -31,8 +33,6 @@ class FileUpload {
         }
     ));
     response = await dio.post("${Env.environment['baseUrl']}/orders", data: formData);
-
-    print(response.statusMessage);
     return(response.statusMessage);
   }
 }

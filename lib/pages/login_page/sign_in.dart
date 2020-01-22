@@ -19,7 +19,7 @@ class _SignInState extends State<SignIn> {
       form.save();
       var status = await signInModel.getHttp();
       if(status == 'OK') {
-        Navigator.pushNamed(context, Routes.UPLOAD_FILE);
+        Navigator.pushNamedAndRemoveUntil(context, Routes.UPLOAD_FILE, (Route<dynamic> route) => false);
       }
       else {
         SharedWidgets().errorDialog(context, 'Incorrect Login Details');
@@ -60,25 +60,13 @@ class _SignInState extends State<SignIn> {
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0))),
             onSaved: (String value) {
-              signInModel.tacCode = value;
+              signInModel.password = value;
             },
-            validator: (value) => signInModel.validateTacCode(value),
+            validator: (value) => signInModel.validatePassword(value),
             obscureText: true,
-//            keyboardType: TextInputType.number,
           ),
         ),
         SizedBox(width: 15.0,),
-//        Flexible(
-//          flex: 5,
-//          child: InkWell(
-//            child: Text(
-//              'GET CODE',
-//              style: TextStyle(
-//                color: Colors.blue
-//              ),
-//            ),
-//          )
-//        ),
       ],
     );
   }
@@ -88,17 +76,6 @@ class _SignInState extends State<SignIn> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-//        Flexible(
-//          flex: 2,
-//          child: new TextFormField(
-//            decoration: InputDecoration(
-//                border: OutlineInputBorder(
-//                    borderRadius: BorderRadius.circular(8.0))),
-//            initialValue: 'MY (60)',
-//            enabled: false,
-//          ),
-//        ),
-//        SizedBox(width: 10.0,),
         Flexible(
           flex: 6,
           child: new TextFormField(
@@ -107,10 +84,10 @@ class _SignInState extends State<SignIn> {
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0))),
             onSaved: (String value) {
-              signInModel.mobileNum = value;
+              signInModel.email = value;
             },
-            validator: (value) => signInModel.validateMobileNumber(value),
-//            keyboardType: TextInputType.number,
+            validator: (value) => signInModel.validateEmail(value),
+            keyboardType: TextInputType.emailAddress,
           ),
         ),
       ],
@@ -163,12 +140,18 @@ class _SignInState extends State<SignIn> {
                   SizedBox(height: 20.0),
                   Text(
                     'EMAIL',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600
+                    ),
                   ),
                   SizedBox(height: 20.0),
                   _buildPhoneNumberField(),
                   SizedBox(height: 20.0),
                   Text(
                     'PASSWORD',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600
+                    ),
                   ),
                   SizedBox(height: 20.0),
                   _buildTacCode(),

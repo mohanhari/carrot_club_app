@@ -1,17 +1,14 @@
-import 'package:carrot_club_app/pages/landing_pages/upload_files.dart';
-import 'package:carrot_club_app/pages/login_page/login.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:async';
 import 'package:fluro/fluro.dart';
 import 'package:carrot_club_app/configs/routes/application.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fluttertoast/fluttertoast.dart' as toast;
 import 'package:carrot_club_app/configs/routes/routes.dart';
 //import 'package:image_picker/image_picker.dart';
 import 'package:carrot_club_app/configs/theme.dart';
-import 'package:overlay_support/overlay_support.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:bot_toast/bot_toast.dart';
 
 void main() => runApp(MyApp());
 
@@ -42,11 +39,20 @@ class _MyAppState extends State<MyApp> {
         return null;
       },
       onMessage: (Map<String, dynamic> msg) async{
-        print(msg["notification"]["title"]);
-        toast.Fluttertoast.showToast(msg: "onResume $msg", toastLength: toast.Toast.LENGTH_LONG);
-        showSimpleNotification(
-            Text("${msg["notification"]["title"]}"),
-            background: Colors.green);
+        BotToast.showSimpleNotification(
+            title: "${msg["notification"]["title"]}",
+//            subTitle: "yes!",
+            onTap: () {
+              BotToast.showText(text: 'Tap toast');
+            },
+            onLongPress: () {
+              BotToast.showText(text: 'Long press toast');
+            },
+            animationDuration:
+            Duration(milliseconds: 200),
+            animationReverseDuration:
+            Duration(milliseconds: 200),
+            duration: Duration(seconds: 5));
 //        return;
       },
     );
@@ -63,7 +69,6 @@ class _MyAppState extends State<MyApp> {
     firebaseMessaging.getToken().then((token) async{
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('fcm_token', token);
-      print(token);
     });
     super.initState();
   }
@@ -71,13 +76,16 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
 
-    return OverlaySupport(child: MaterialApp(
-      onGenerateRoute: Application.router.generator,
-      initialRoute: Routes.LOGIN_PAGE,
-      darkTheme: Themes().darkTheme,
-      theme: Themes().defaultTheme,
-      debugShowCheckedModeBanner: false,
-    ));
+    return BotToastInit(
+      child: MaterialApp(
+        onGenerateRoute: Application.router.generator,
+        initialRoute: Routes.LOGIN_PAGE,
+        darkTheme: Themes().darkTheme,
+        theme: Themes().defaultTheme,
+        navigatorObservers: [BotToastNavigatorObserver()],
+        debugShowCheckedModeBanner: false,
+      ),
+    );
   }
 }
 

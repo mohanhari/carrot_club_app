@@ -2,44 +2,32 @@ import 'package:dio/dio.dart';
 import 'package:carrot_club_app/configs/env.dart';
 
 class SignInModel {
-  String mobileNum, tacCode;
+  String email, password;
 
-  String validateMobileNumber(String value){
+  String validateEmail(String value){
     if(value.isEmpty)
-      return('Please enter phone number!');
+      return('Please enter the Email!');
 
-    return null;
+    RegExp regExp = new RegExp(r"^\S+@\S+\.\S+$");
 
-//    RegExp regExp = new RegExp(r"^\d{9}$");
-//
-//    if (regExp.hasMatch(value)) {
-//      return null;
-//    }
-//
-//    return 'Phone number is not valid';
+    if (regExp.hasMatch(value))
+      return null;
+
+    return 'Email is not valid';
   }
 
-  String validateTacCode(String value){
+  String validatePassword(String value){
     if(value.isEmpty)
-      return('Please enter TAC code!');
+      return('Please enter Password!');
 
     return null;
-
-//    RegExp regExp = new RegExp(r"^\d{4}$");
-//
-//    if (regExp.hasMatch(value)) {
-//      return null;
-//    }
-//
-//    return 'TAC code is not valid';
   }
 
   Future <String> getHttp() async {
     try {
       Response response;
       Dio dio = new Dio();
-      response = await dio.post("${Env.environment['baseUrl']}/sign_in", data: {"email": mobileNum, "password": tacCode});
-      print(response.headers);
+      response = await dio.post("${Env.environment['baseUrl']}/sign_in", data: {"email": email, "password": password});
       return(response.statusMessage);
     } catch (e) {
       return(e.toString());
