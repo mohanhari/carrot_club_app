@@ -12,6 +12,7 @@ class Themes {
       headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
       title: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
       body1: TextStyle(fontSize: 16.0, letterSpacing: 0.5),
+      body2: TextStyle(fontSize: 20.0, letterSpacing: 0.5, fontWeight: FontWeight.w600),
     ),
   );
   var darkTheme = ThemeData(
@@ -24,6 +25,7 @@ class Themes {
       headline: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
       title: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
       body1: TextStyle(fontSize: 16.0, letterSpacing: 0.5),
+      body2: TextStyle(fontSize: 20.0, letterSpacing: 0.5, fontWeight: FontWeight.w600),
     ),
   );
 }

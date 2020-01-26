@@ -23,14 +23,21 @@ class SignInModel {
     return null;
   }
 
-  Future <String> getHttp() async {
+  Future <dynamic> getHttp() async {
     try {
       Response response;
       Dio dio = new Dio();
-      response = await dio.post("${Env.environment['baseUrl']}/sign_in", data: {"email": email, "password": password});
-      return(response.statusMessage);
+      var data = {
+        "session":{
+          "email": email,
+          "password": password
+        }
+      };
+
+      response = await dio.post("${Env.environment['baseUrl']}/sign_in", data: data);
+      return(response);
     } catch (e) {
-      return(e.toString());
+      return("error");
     }
   }
 }

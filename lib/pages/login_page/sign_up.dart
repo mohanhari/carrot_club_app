@@ -199,12 +199,11 @@ class _SignUpState extends State<SignUp> {
             borderRadius: BorderRadius.circular(5.0),
           )),
       value: registration.gender,
+      isDense: true,
       items: registration.genders.map<DropdownMenuItem<String>>((value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.7,
-              child: Text(value)),
+          child: Text(value),
         );
       }).toList(),
       onChanged: (String newValue) {
